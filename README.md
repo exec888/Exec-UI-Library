@@ -18,7 +18,7 @@ local Window = Library:Window({
 	}
 	Saves = {
 		FileId = <name : string>,
-		Enabmed = <boolean>
+		Enabled = <boolean>
 	}
 	Sounds = <boolean>
 })
