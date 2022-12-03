@@ -68,11 +68,11 @@ Button:Destroy()
 
 ## Creating a toggle
 ```lua
-Section:AddToggle({
+LeftSection:AddToggle({
 	Text = <name : string>,
 	TextColor = <Color3>,
 	Default = <boolean>,
-	Callback = <function>
+	Callback = <function> <returns : boolean>
 })
 ```
 
@@ -84,51 +84,56 @@ Toggle:Destroy()
 
 ## Creating a Slider
 ```lua
-Section:AddSlider({
-	Text = "Name",
-	Min = 0,
-	Max = 200,
-	Default = 16,
-	Color = Color3.fromRGB(85, 170, 255),
-	Callback = function(Value)
-		print(Value)
-	end
+LeftSection:AddSlider({
+	Text = <name : string>,
+	TextColor = <Color3>,
+	Default = <number>,
+	Min = <number>,
+	Max = <number>,
+	Increment = <number>,
+	Callback = <function> <returns : number>
 })
 ```
 
-### Change Slider Value
+#### Methods
 ```lua
-Slider:Set(2)
+Slider:Set(<number>)
+Slider:Destroy()
 ```
 
 ## Creating a Textbox
 ```lua
-Section:AddTextBox({
-	Text = "Name",
-	Default = "16",
-	Callback = function(Value)
-		print(Value)
-	end
+LeftSection:AddTextBox({
+	Text = <name : string>,
+	TextColor = <Color3>,
+	PressEnter = <boolean>,
+	ClearOnFocus <boolean>,
+	Default = <boolean>,
+	Callback = <function> <returns : string>
 })
 
 ```
-
+#### Methods
+```lua
+Input:Set(<string>)
+Input:Destroy()
+```
 
 ## Creating a Keybind
 ```lua
-Section:AddBind({
-	Text = "Name",
-	Default = Enum.KeyCode.E,
-	Callback = function(Value)
-		print("Pressed "..Value.Name)
-		-- do stuff
-	end    
+LeftSection:AddBind({
+	Text = <name : string>,
+	TextColor = <Color3>,
+	Default = <Keycode : EnumItem>
+	Hold = <boolean>,
+	Callback = <function> <returns : <string> <holding : boolean>
 })
 ```
 
-### Changing the value of a bind
+#### Methods
 ```lua
 Bind:Set(Enum.KeyCode.E)
+Bind:Destroy()
 ```
 
 
