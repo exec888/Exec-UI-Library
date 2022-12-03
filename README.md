@@ -32,7 +32,7 @@ local Tab = Window:AddTab{
 	TextColor3 = <Color3>,
 }
 ```
-
+___
 ## Creating a Left Section
 ```lua
 local LeftSection = Tab:LeftSection(<name : string>)
@@ -41,7 +41,7 @@ local LeftSection = Tab:LeftSection(<name : string>)
 ```lua
 local RightSection = Tab:RightSection(<name : string>)
 ```
-
+___
 ## Creating a Notification
 ```lua
 Library:Notification({
@@ -50,7 +50,7 @@ Library:Notification({
 	Time = <duration : number>
 })
 ```
-
+___
 ## Creating a Button
 ```lua
 LeftSection:AddButton({
@@ -66,7 +66,7 @@ You need to state your element as a variable to get its methods, Example: ``` lo
 Button:Set(<string>)
 Button:Destroy()
 ```
-
+___
 ## Creating a toggle
 ```lua
 LeftSection:AddToggle({
@@ -82,7 +82,7 @@ LeftSection:AddToggle({
 Toggle:Set(<boolean>)
 Toggle:Destroy()
 ```
-
+___
 ## Creating a Slider
 ```lua
 LeftSection:AddSlider({
@@ -101,7 +101,7 @@ LeftSection:AddSlider({
 Slider:Set(<number>)
 Slider:Destroy()
 ```
-
+___
 ## Creating a Textbox
 ```lua
 LeftSection:AddTextBox({
@@ -120,7 +120,7 @@ LeftSection:AddTextBox({
 Input:Set(<string>)
 Input:Destroy()
 ```
-
+___
 ## Creating a Keybind
 ```lua
 LeftSection:AddBind({
@@ -137,7 +137,7 @@ LeftSection:AddBind({
 Bind:Set(Enum.KeyCode.E)
 Bind:Destroy()
 ```
-
+___
 
 ## Creating a Dropdown
 ```lua
@@ -157,7 +157,7 @@ Dropdown:Refresh(<list : table>, <clear : boolean>)
 Dropdown:Remove(<index>)
 Dropdown:Set(<index>)
 ```
-
+___
 ## Miscellaneous
 
 ### Adding Flags
@@ -175,7 +175,7 @@ LeftSection:AddToggle({
 Library:Get(<Flag : string>)
 <returns value>
 ```
-
+___
 ### Library Methods
 ```lua
 Library:Destroy()
