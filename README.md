@@ -6,7 +6,7 @@ Exec UI Library
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Player788/Exec-UI-Library/main/src.lua'))()
 ```
 
-## Creating a Window
+### Creating a Window
 ```lua
 local Window = Library:Window({
 	Name = <title : string>, 
@@ -25,7 +25,7 @@ local Window = Library:Window({
 ```
 ___
 
-## Creating a Tab
+### Creating a Tab
 ```lua
 local Tab = Window:AddTab{
 	Name = <text : string>,
@@ -33,16 +33,16 @@ local Tab = Window:AddTab{
 }
 ```
 ___
-## Creating a Left Section
+### Creating a Left Section
 ```lua
 local LeftSection = Tab:LeftSection(<name : string>)
 ```
-## Creating a Right Section
+### Creating a Right Section
 ```lua
 local RightSection = Tab:RightSection(<name : string>)
 ```
 ___
-## Creating a Notification
+### Creating a Notification
 ```lua
 Library:Notification({
 	Title = <header : string>,
@@ -51,7 +51,7 @@ Library:Notification({
 })
 ```
 ___
-## Creating a Button
+### Creating a Button
 ```lua
 LeftSection:AddButton({
 	Text = <name : string>,
@@ -67,7 +67,7 @@ Button:Set(<string>)
 Button:Destroy()
 ```
 ___
-## Creating a toggle
+### Creating a toggle
 ```lua
 LeftSection:AddToggle({
 	Text = <name : string>,
@@ -83,7 +83,7 @@ Toggle:Set(<boolean>)
 Toggle:Destroy()
 ```
 ___
-## Creating a Slider
+### Creating a Slider
 ```lua
 LeftSection:AddSlider({
 	Text = <name : string>,
@@ -102,7 +102,7 @@ Slider:Set(<number>)
 Slider:Destroy()
 ```
 ___
-## Creating a Textbox
+### Creating a Textbox
 ```lua
 LeftSection:AddTextBox({
 	Text = <name : string>,
@@ -121,7 +121,7 @@ Input:Set(<string>)
 Input:Destroy()
 ```
 ___
-## Creating a Keybind
+### Creating a Keybind
 ```lua
 LeftSection:AddBind({
 	Text = <name : string>,
@@ -139,7 +139,7 @@ Bind:Destroy()
 ```
 ___
 
-## Creating a Dropdown
+### Creating a Dropdown
 ```lua
 LeftSection:AddDropDown({
 	Text = "Select Option",
