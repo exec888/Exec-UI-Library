@@ -78,7 +78,7 @@ Section:AddToggle({
 
 ### Methods
 ```lua
-Toggle:Set(true)
+Toggle:Set(<boolean>)
 Toggle:Destroy()
 ```
 
