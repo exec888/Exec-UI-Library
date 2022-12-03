@@ -1,5 +1,5 @@
-# 7Exec Library
-Exec UI Library Usage
+# Documentation
+Exec UI Library
 
 ## Loading the Library
 ```lua
@@ -26,58 +26,43 @@ local Window = Library:Window({
 
 ## Creating a Tab
 ```lua
-local Tab = Window:AddTab("Name")
-
---[[
-Name = <string> - The name of the tab.
-]]
+local Tab = Window:AddTab{
+	Name = <text : string>,
+	TextColor3 = <Color3>,
+}
 ```
 
-## Creating a Section
+## Creating a Left Section
 ```lua
-local Section = Tab:AddSection("Name")
-
---[[
-Name = <string> - The name of the section.
-]]
+local LeftSection = Tab:LeftSection(<name : string>)
 ```
-```diff
-- Add alternating Sections (Section1[Elements] ... Section2[Elements]) because AutomaticSizeXY doesn't support Scale. 
+## Creating a Right Section
+```lua
+local RightSection = Tab:RightSection(<name : string>)
 ```
 
 ## Creating a Notification
 ```lua
 Library:Notification({
-	Title = "Title",
-	Content = "Content",
-	Time = 5
+	Title = <header : string>,
+	Content = <description : string>,
+	Time = <duration : number>
 })
-
-
---[[
-Title = <string> - The title of the notification.
-Content = <string> - The content of the notification.
-Time = <number> - The duration of the notfication.
-]]
 ```
-
-
 
 ## Creating a Button
 ```lua
-Section:AddButton({
-	Text = "Name",
-	Callback = function()
-      		print("button pressed")
-  	end    
+LeftSection:AddButton({
+	Text = <name : string>,
+	TextColor = <Color3>,
+	Callback = <function>,
 })
-
---[[
-Name = <string> - The name of the button.
-Callback = <function> - The function of the button.
-]]
 ```
+You need to state your element as a variable to get its methods, Example: ```lua local Button = Section:AddButton{} ```
 
+### Set Text
+```lua
+Button:Set(<string>)
 
 ## Creating a toggle
 ```lua
