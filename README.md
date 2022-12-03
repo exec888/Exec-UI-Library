@@ -60,7 +60,7 @@ LeftSection:AddButton({
 ```
 You need to state your element as a variable to get its methods, Example: ``` local Button = Section:AddButton{} ```
 
-### Methods
+#### Methods
 ```lua
 Button:Set(<string>)
 Button:Destroy()
@@ -76,7 +76,7 @@ Section:AddToggle({
 })
 ```
 
-### Methods
+#### Methods
 ```lua
 Toggle:Set(<boolean>)
 Toggle:Destroy()
@@ -94,34 +94,12 @@ Section:AddSlider({
 		print(Value)
 	end
 })
-
-
---[[
-Name = <string> - The name of the slider.
-Min = <number> - The minimal value of the slider.
-Max = <number> - The maxium value of the slider.
-Default = <number> - The default value of the slider.
-Callback = <function> - The function of the slider.
-]]
 ```
 
 ### Change Slider Value
 ```lua
 Slider:Set(2)
 ```
-Make sure you make your slider a variable (local CoolSlider = Section:AddSlider...) for this to work.
-
-
-## Creating a Label
-```lua
-Section:AddLabel("Label")
-```
-
-### Changing the value of an existing label
-```lua
-CoolLabel:Set("Label New!")
-```
-
 
 ## Creating a Textbox
 ```lua
@@ -133,11 +111,6 @@ Section:AddTextBox({
 	end
 })
 
---[[
-Name = <string> - The name of the textbox.
-Default = <string> - The default value of the textbox.
-Callback = <function> - The function of the textbox.
-]]
 ```
 
 
@@ -151,12 +124,6 @@ Section:AddBind({
 		-- do stuff
 	end    
 })
-
---[[
-Name = <string> - The name of the bind.
-Default = <keycode> - The default value of the bind.
-Callback = <function> - The function of the bind.
-]]
 ```
 
 ### Changing the value of a bind
@@ -175,13 +142,6 @@ Section:AddDropDown({
 		print(Value)
 	end
 })
-
---[[
-Name = <string> - The name of the dropdown.
-Default = <string> - The default value of the dropdown.
-Options = <table> - The options in the dropdown; strings, numbers, objects(returns name).
-Callback = <function> - The function of the dropdown.
-]]
 ```
 
 ### Adding a set of new Dropdown buttons to an existing menu
@@ -208,7 +168,7 @@ Tab:AddToggle({
     Key = "toggle"
 })
 ```
-#### Getting a Key
+#### Methods
 ```lua
 print(Library:Get("toggle"))
 ```
