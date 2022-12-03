@@ -60,7 +60,7 @@ LeftSection:AddButton({
 ```
 You need to state your element as a variable to get its methods, Example: ``` local Button = Section:AddButton{} ```
 
-### Methods
+#### Methods
 ```lua
 Button:Set(<string>)
 Button:Destroy()
@@ -76,7 +76,7 @@ LeftSection:AddToggle({
 })
 ```
 
-### Methods
+#### Methods
 ```lua
 Toggle:Set(<boolean>)
 Toggle:Destroy()
@@ -95,7 +95,7 @@ LeftSection:AddSlider({
 })
 ```
 
-### Methods
+#### Methods
 ```lua
 Slider:Set(<number>)
 Slider:Destroy()
@@ -113,7 +113,8 @@ LeftSection:AddTextBox({
 })
 
 ```
-### Methods
+
+#### Methods
 ```lua
 Input:Set(<string>)
 Input:Destroy()
@@ -130,16 +131,16 @@ LeftSection:AddBind({
 })
 ```
 
-### Methods
+#### Methods
 ```lua
 Bind:Set(Enum.KeyCode.E)
 Bind:Destroy()
 ```
 
 
-## Creating a Dropdown menu
+## Creating a Dropdown
 ```lua
-Section:AddDropDown({
+LeftSection:AddDropDown({
 	Text = "Select Option",
 	Default = "16",
 	Options = {16, 200},
@@ -149,36 +150,40 @@ Section:AddDropDown({
 })
 ```
 
-### Adding a set of new Dropdown buttons to an existing menu
+#### Methods
 ```lua
-Dropdown:Refresh(List<table>, true)
-```
-
-The above boolean value "true" is whether or not the current buttons will be deleted.
-
-### Selecting a dropdown option
-```lua
-Dropdown:Set("dropdown option")
+Dropdown:Refresh(<list : table>, <clear : boolean>)
+Dropdown:Remove(<index>)
+Dropdown:Set(<index>)
 ```
 
 ## Miscellaneous
 
-### Adding Keys
-Keys are used as global variables to store (Values, Tables etc.) Toggles, Sliders, Dropdowns & binds. Filesystem not yet implemented.
+### Adding Flags
+Flags are used as global variables to store (Values, Tables etc.) Toggles, Sliders, Dropdowns & binds. Filesystem not yet implemented.
 Example:
 ```lua
-Tab:AddToggle({
+LeftSection:AddToggle({
     Name = "Toggle",
     Default = true,
-    Key = "toggle"
+    Flag = "toggle"
 })
 ```
 #### Methods
 ```lua
-print(Library:Get("toggle"))
+Library:Get(<Flag : string>)
+<returns value>
 ```
 
-### Destroy a Window
+### Library Methods
 ```lua
 Library:Destroy()
+Library:UpdateTheme()
 ```
+
+### Library Config
+```lua
+Library.Keys <table : dict>
+Library.Theme <table : dict>
+Library.Logs <table : array>
+Library.Config <table : dict>
