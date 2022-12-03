@@ -58,33 +58,28 @@ LeftSection:AddButton({
 	Callback = <function>,
 })
 ```
-You need to state your element as a variable to get its methods, Example: ```lua local Button = Section:AddButton{} ```
+You need to state your element as a variable to get its methods, Example: ``` local Button = Section:AddButton{} ```
 
-### Set Text
+### Methods
 ```lua
 Button:Set(<string>)
+Button:Destroy()
+```
 
 ## Creating a toggle
 ```lua
 Section:AddToggle({
-	Text = "Name",
-	Default = false,
-	Callback = function(Value)
-		print(Value)
-		end
-	end
+	Text = <name : string>,
+	TextColor = <Color3>,
+	Default = <boolean>,
+	Callback = <function>
 })
-
---[[
-Name = <string> - The name of the toggle.
-Default = <bool> - The default value of the toggle.
-Callback = <function> - The function of the toggle.
-]]
 ```
 
-### Changing the value of an existing Toggle
+### Methods
 ```lua
-CoolToggle:Set(true)
+Toggle:Set(true)
+Toggle:Destroy()
 ```
 
 ## Creating a Slider
