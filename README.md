@@ -60,7 +60,7 @@ LeftSection:AddButton({
 ```
 You need to state your element as a variable to get its methods, Example: ``` local Button = Section:AddButton{} ```
 
-#### Methods
+### Methods
 ```lua
 Button:Set(<string>)
 Button:Destroy()
@@ -76,7 +76,7 @@ LeftSection:AddToggle({
 })
 ```
 
-#### Methods
+### Methods
 ```lua
 Toggle:Set(<boolean>)
 Toggle:Destroy()
@@ -95,7 +95,7 @@ LeftSection:AddSlider({
 })
 ```
 
-#### Methods
+### Methods
 ```lua
 Slider:Set(<number>)
 Slider:Destroy()
@@ -113,7 +113,7 @@ LeftSection:AddTextBox({
 })
 
 ```
-#### Methods
+### Methods
 ```lua
 Input:Set(<string>)
 Input:Destroy()
@@ -130,7 +130,7 @@ LeftSection:AddBind({
 })
 ```
 
-#### Methods
+### Methods
 ```lua
 Bind:Set(Enum.KeyCode.E)
 Bind:Destroy()
