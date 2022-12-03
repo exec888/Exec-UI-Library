@@ -23,6 +23,7 @@ local Window = Library:Window({
 	Sounds = <boolean>
 })
 ```
+___
 
 ## Creating a Tab
 ```lua
