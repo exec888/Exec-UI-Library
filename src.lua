@@ -991,7 +991,7 @@ function Library:Window(Table)
 		Text = "Join Player",
 		Placeholder = "UserId",
 		Callback = function(userid)
-			Library:Notification({Title = 'Join Player', Content = "Searching...", Time = 120})
+			Library:Notification({Title = 'Join Player', Content = "Searching..."})
 			local var = rbx_join.Join(userid)
 			if var.Success then
 				Library:Notification({Title = '<font color="rgb(85, 170, 127)">Join Player</font>', Content = var.Message})
@@ -1001,7 +1001,7 @@ function Library:Window(Table)
 		end
 	})
 
-	Library:Notification({Content = "Loaded! \nUI:ExecLib v" .._G.Version})
+	Library:Notification({Content = "Loaded! \nUI: ExecLib v" .._G.Version})
 	return Tabs
 end
 
