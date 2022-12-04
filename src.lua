@@ -956,7 +956,7 @@ function Library:Window(Table)
 		end,
 	}
 	local FPS = Info:AddButton{"Avg. FPS : "}
-	local PING, ping = Info:AddButton{"Avg. PING : "},0
+	local PING, ping = Info:AddButton{"Avg. PING : "}
 	if not game:GetService("RunService"):IsStudio() then
 		for a,v in pairs(game.CoreGui.RobloxGui.PerformanceStats:GetDescendants()) do
 			if v:IsA("TextLabel") and v.Name == "TitleLabel" then
@@ -966,6 +966,7 @@ function Library:Window(Table)
 			end
 		end
 	end
+
 	local TimeFunction = RunService:IsRunning() and time or os.clock
 	local LastIteration, Start
 	local FrameUpdateTable = {}
@@ -977,7 +978,7 @@ function Library:Window(Table)
 
 		FrameUpdateTable[1] = LastIteration
 		FPS:Set("Avg. FPS : " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start))))
-		PING:Set("Avg. PING : " .. PING:Set("Avg. PING : " .. ping or ping.Text or 0))
+		if ping then PING:Set("Avg. PING : " .. ping.Text or 0) end
 	end
 	Start = TimeFunction()
 	RunService.Heartbeat:Connect(HeartbeatUpdate)
