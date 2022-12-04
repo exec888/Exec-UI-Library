@@ -60,6 +60,7 @@ LeftSection:AddButton({
 })
 ```
 You need to state your element as a variable to get its methods, Example: ``` local Button = Section:AddButton{} ```
+You can also chain element methods, Example ``` LeftSection:AddButton{}:AddButton{}```
 
 #### Methods
 ```lua
@@ -109,7 +110,8 @@ LeftSection:AddTextBox({
 	TextColor = <Color3>,
 	PressEnter = <boolean>,
 	ClearOnFocus <boolean>,
-	Default = <boolean>,
+	Default = <string>,
+	Placeholder = <string>,
 	Callback = <function> <returns : string>
 })
 
