@@ -163,7 +163,7 @@ ___
 ## Miscellaneous
 
 ### Adding Flags
-Flags are used as global variables to store (Values, Tables etc.) Toggles, Sliders, Dropdowns & binds. Filesystem not yet implemented.
+- Flags are used as global variables to store (Values, Tables etc.) Toggles, Sliders, Dropdowns & binds. Filesystem not yet implemented.
 Example:
 ```lua
 LeftSection:AddToggle({
