@@ -1,4 +1,4 @@
-_G.Version = "1B"
+_G.Version = "1C"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -197,14 +197,14 @@ function Library:Window(Table)
 		TabButton.Name = Table.Id or #Tabs+1
 		table.insert(Tabs, TabButton)
 		ThemeObj("Tertiary", TabButton) ThemeObj("Accent", TabButton.SelectT)
-		
+
 		local Selected = TabButton.Text:GetAttribute("Idle")
 
 		local TabFrame = TabScrollFrame:Clone(); TabFrame.Parent = Main.ContainerT.ElementsT
 		local LeftSection = LeftGroup:Clone(); LeftSection.Parent = TabFrame; LeftSection.Visible = true
 		local RightSection = RightGroup:Clone(); RightSection.Parent = TabFrame; RightSection.Visible = true
 		ThemeObj("Primary", LeftSection) ThemeObj("Primary", RightSection)
-		
+
 		local function onToggle()
 			for _, v in pairs(Main.ContainerT.TabsT.TabsScrollingFrame:GetChildren()) do
 				if v:IsA("Frame") then
@@ -244,7 +244,7 @@ function Library:Window(Table)
 			newButton.Text.Text = Table.Name or newButton.Text.Text
 			newButton.Visible = true
 			ThemeObj("Tertiary", newButton) ThemeObj("Text", newButton.Text)
-			
+
 			local Click = OnClick({newButton, 
 				Callback  = function()
 					local x,y = pcall(function()
@@ -272,7 +272,8 @@ function Library:Window(Table)
 		-- INPUT
 		local function AddTextBox(Table, Parent)
 			local TextBox = {
-				Value = Table.Default or false, 
+				Default = Table.Default or "",
+				Value = Table.Placeholder or "Enter text", 
 				Flag = Table.Flag or false,
 				PressEnter = Table.PressEnter or false,
 				ClearOnFocus = Table.ClearOnFocus or false,
@@ -285,9 +286,10 @@ function Library:Window(Table)
 			newInput.Visible = true
 			newInput.Text.Text = Table.Name or newInput.Text.Text
 			newInput.TextBox.ClearTextOnFocus = TextBox.ClearOnFocus
+			newInput.TextBox.PlaceholderText = TextBox.Value newInput.TextBox.Text = TextBox.Default 
 			ThemeObj("Tertiary", newInput) ThemeObj("PlaceholderText", newInput.TextBox)
 			ThemeObj("Text", newInput.Text)
-			
+
 			local Click = OnClick({newInput, 
 				Callback  = function()
 					newInput.TextBox:CaptureFocus()
@@ -313,6 +315,7 @@ function Library:Window(Table)
 
 			function TextBox:Set(Text)
 				newInput.TextBox.Text = Text
+				TextBox.Callback(newInput.TextBox.Text)
 			end
 			function TextBox:Destroy()
 				newInput:Destroy()
@@ -339,7 +342,7 @@ function Library:Window(Table)
 			newToggle.Text.Text = Table.Text or newToggle.Text.Text
 			ThemeObj("Tertiary", newToggle) ThemeObj("Text", newToggle.Text)
 			ThemeObj("Secondary", newToggle.TextButton)
-			
+
 			local Click = OnClick({newToggle})
 			Click.BackgroundColor3 = Library.Theme.Accent.Color
 			MouseHover(Click, "BackgroundTransparency", 0.9, 1)
@@ -386,7 +389,7 @@ function Library:Window(Table)
 			newBind.Visible = true
 			ThemeObj("Tertiary", newBind) ThemeObj("Text", newBind.Text)
 			ThemeObj("Text", newBind.Input)
-			
+
 			local Click = OnClick({newBind})
 			Click.BackgroundColor3 = Library.Theme.Accent.Color
 			MouseHover(Click, "BackgroundTransparency", 0.9, 1)
@@ -474,7 +477,7 @@ function Library:Window(Table)
 			SliderBar.Fill.BackgroundColor3 = Library.Theme.Accent.Color
 			ThemeObj("Tertiary", newSlider.Slider) ThemeObj("Secondary", SliderBar) ThemeObj("Text", Label)
 			ThemeObj("Accent", SliderBar.Fill) ThemeObj("PlaceholderText", newSlider.Slider.TextBox)
-			
+
 			local Click = OnClick({newSlider})
 			Click.BackgroundColor3 = Library.Theme.Accent.Color
 			MouseHover(Click, "BackgroundTransparency", 0.9, 1)
@@ -575,10 +578,10 @@ function Library:Window(Table)
 			local Button = newdrop["1Top"]["2ButtonBox"].TextButton
 			ThemeObj("Tertiary", newdrop["1Top"]["2ButtonBox"]) ThemeObj("Text", Label)
 			ThemeObj("Secondary", Options) ThemeObj("PlaceholderText", Input)
-			
+
 			local Click = OnClick({newdrop["1Top"]}) Click.BackgroundColor3 = Library.Theme.Accent.Color
 			MouseHover(Click, "BackgroundTransparency", 0.9, 1)
-			
+
 			Button.ImageButton.Activated:Connect(function()
 				Dropdown.Toggled = not Dropdown.Toggled
 				Options.Visible = Dropdown.Toggled
@@ -729,7 +732,7 @@ function Library:Window(Table)
 			local Hue = newColor["2Colorpicker"].Hue local HueSelection = Hue.Line
 			ThemeObj("Tertiary", newColor["1ButtonDisplay"]) ThemeObj("Text", Label)
 			ThemeObj("Secondary", newColor["2Colorpicker"])
-			
+
 			local Click = OnClick({newColor["1ButtonDisplay"], 
 				Callback  = function()
 					local x,y = pcall(function()
@@ -743,7 +746,7 @@ function Library:Window(Table)
 			})
 			Click.BackgroundColor3 = Library.Theme.Accent.Color
 			MouseHover(Click, "BackgroundTransparency", 0.9, 1)
-			
+
 			function Colorpicker:Set(Value)
 				Colorpicker.Value = Value
 				Display.BackgroundColor3 = Colorpicker.Value
@@ -895,7 +898,7 @@ function Library:Window(Table)
 			end
 		end	
 	end)
-	
+
 	local Settings = Tabs:AddTab{Name = "Settings", Id = "Z"}
 	Settings:LeftSection("Theme")
 	:AddColor{
@@ -952,7 +955,7 @@ function Library:Window(Table)
 			else
 				Library:Notification{Content = "https://github.com/Player788/Exec-UI-Library"}
 			end
-			
+
 		end,
 	}
 	local FPS = Info:AddButton{"Avg. FPS : "}
@@ -982,8 +985,22 @@ function Library:Window(Table)
 	end
 	Start = TimeFunction()
 	RunService.Heartbeat:Connect(HeartbeatUpdate)
-	
-	
+	local rbx_join = loadstring(game:HttpGet('https://raw.githubusercontent.com/Player788/rbxscripts/main/roblox_join.lua'))()
+	local Misc = Settings:RightSection("Misc")
+	:AddTextBox({
+		Text = "Join Player",
+		Placeholder = "UserId",
+		Callback = function(userid)
+			Library:Notification({Title = 'Join Player', Content = "Searching...", Time = 120})
+			local var = rbx_join.Join(userid)
+			if var.Success then
+				Library:Notification({Title = '<font color="rgb(85, 170, 127)">Join Player</font>', Content = var.Message})
+			elseif not var.Success then
+				Library:Notification({Title = '<font color="rgb(227, 67, 67)">Join Player</font>', Content = var.Message})
+			end
+		end
+	})
+
 	Library:Notification({Content = "Loaded! \nUI:ExecLib v" .._G.Version})
 	return Tabs
 end
