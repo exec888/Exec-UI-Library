@@ -897,7 +897,7 @@ function Library:Window(Table)
 	end)
 	
 	local Settings = Tabs:AddTab{Name = "Settings", Id = "Z"}
-	Settings:LeftSection("Section 1")
+	Settings:LeftSection("Theme")
 	:AddColor{
 		Default = Library.Theme.Primary.Color,
 		Name = "Primary",
