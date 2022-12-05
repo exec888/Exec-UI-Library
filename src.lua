@@ -1,4 +1,4 @@
-_G.Version = "1E"
+_G.Version = "1F"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -209,6 +209,9 @@ function Library:Window(Table)
 	if Table.Saves then
 		Library.Config.Saves.Enabled = Table.Saves.Enabled or Library.Config.Saves.Enabled
 		Library.Config.Saves.Folder = Table.Saves.Folder or Library.Config.Saves.Folder
+		if not isfolder(Library.Config.Saves.Folder) then
+			makefolder(Library.Config.Saves.Folder)
+		end
 	end
 
 	Main.TopT.Title.Text = Library.Config.Name .. " | " .. Library.Config.Script
