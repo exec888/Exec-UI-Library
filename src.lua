@@ -1,4 +1,4 @@
-_G.Version = "1G"
+_G.Version = "1H"
 local Library = {
 	Flags = {},
 	Logs = {},
