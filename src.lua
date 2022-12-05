@@ -102,13 +102,11 @@ end
 function Library:Save()
 	local Data = {}
 	for i,v in pairs(Library.Flags) do
-		--if v.Save then
-			if v.Type == "Colorpicker" then
-				--Data[i] = PackColor(v.Value)
-			else
-				Data[i] = v.Value
-			end
-		--end	
+		if v.Type == "Colorpicker" then
+			Data[i] = {R = v.Value.R * 255, G = v.Value.G * 255, B = v.Value.B * 255}
+		else
+			Data[i] = v.Value
+		end
 	end
 	writefile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
@@ -119,13 +117,13 @@ function Library:Load()
 			if Library.Flags[a] then
 				spawn(function() 
 					if Library.Flags[a].Type == "Colorpicker" then
-						--Library.Flags[a]:Set(UnpackColor(b))
+						Library.Flags[a]:Set(Color3.fromRGB(b.R, b.G, b.B))
 					else
 						Library.Flags[a]:Set(b)
 					end    
 				end)
 			else
-				Warn("Filesystem could not find " .. a .." "..b)
+				Warn("Filesystem could not find flag '" .. a .."'")
 			end
 		end)
 	end
