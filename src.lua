@@ -1,4 +1,4 @@
-_G.Version = "1D"
+_G.Version = "1E"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -11,7 +11,7 @@ local Library = {
 			Key = Enum.KeyCode.Semicolon,
 		},
 		Saves = {
-			FileId = "raw",
+			Folder = "raw",
 			Enabled = true,
 		},
 		Sounds = true,
@@ -208,7 +208,7 @@ function Library:Window(Table)
 	end
 	if Table.Saves then
 		Library.Config.Saves.Enabled = Table.Saves.Enabled or Library.Config.Saves.Enabled
-		Library.Config.Saves.FileId = Table.Saves.FileId or Library.Config.Saves.FileId
+		Library.Config.Saves.Folder = Table.Saves.Folder or Library.Config.Saves.Folder
 	end
 
 	Main.TopT.Title.Text = Library.Config.Name .. " | " .. Library.Config.Script
