@@ -1,4 +1,4 @@
-_G.Version = "1J"
+_G.Version = "1K"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -12,7 +12,7 @@ local Library = {
 		},
 		Saves = {
 			Folder = "raw",
-			Enabled = false,
+			Enabled = true,
 		},
 		Sounds = true,
 	},
@@ -107,7 +107,6 @@ function Library:Save()
 		else
 			Data[i] = v.Value
 		end
-		
 	end
 	writefile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
@@ -408,7 +407,7 @@ function Library:Window(Table)
 		-- BIND
 		local function AddBind(Table, Parent)
 			local Keybind = {
-				EnumItem = Table.Default or Enum.KeyCode.LeftAlt, 
+				Value = Table.Default or Enum.KeyCode.LeftAlt, 
 				Flag = Table.Flag or false,
 				Hold = Table.Hold or false,
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
@@ -437,7 +436,7 @@ function Library:Window(Table)
 			UserInputService.InputBegan:Connect(function(Input)
 				if Focus and Input.UserInputType == Enum.UserInputType.Keyboard then
 					Keybind:Set(Input.KeyCode)
-				elseif not Focus and Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode == Keybind.EnumItem then
+				elseif not Focus and Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode == Keybind.Value then
 					if Keybind.Hold then
 						Holding = true
 						local x,y = pcall(function()
@@ -446,14 +445,14 @@ function Library:Window(Table)
 						if not x then Warn(y) end
 					else
 						local x,y = pcall(function()
-							Keybind.Callback(Keybind.EnumItem)
+							Keybind.Callback(Keybind.Value)
 						end)
 						if not x then Warn(y) end
 					end
 				end
 			end)
 			UserInputService.InputEnded:Connect(function(Input)
-				if Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode == Keybind.EnumItem then
+				if Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode == Keybind.Value then
 					if Keybind.Hold and Holding then
 						Holding = false
 						local x,y = pcall(function()
@@ -466,13 +465,13 @@ function Library:Window(Table)
 
 			function Keybind:Set(EnumItem)
 				if not Index(BlacklistedKeys, EnumItem) then
-					Keybind.EnumItem  = EnumItem
+					Keybind.Value  = EnumItem
 					newBind.Input.Text = EnumItem.Name
 					Focus = false
 					Library:Save()
 					-- Save
 				else
-					newBind.Input.Text = Keybind.EnumItem.Name
+					newBind.Input.Text = Keybind.Value.Name
 					Focus = false
 					Warn(EnumItem.Name .. " is a blacklisted key, try another one.")
 				end
@@ -484,7 +483,7 @@ function Library:Window(Table)
 				AddBind(Table, Parent)
 				return Keybind
 			end
-			Keybind:Set(Keybind.EnumItem)
+			Keybind:Set(Keybind.Value)
 			if Keybind.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Keybind.Flag] = Keybind
 			end
@@ -498,7 +497,7 @@ function Library:Window(Table)
 			local Slider = {
 				Min = Table.Min or 0,
 				Max = Table.Max or Table.Default or 25,
-				Default = Table.Default or Table.Max or 5,
+				Value = Table.Default or Table.Max or 5,
 				Flag = Table.Flag or false,
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Increment = Table.Increment or 1,
@@ -553,23 +552,24 @@ function Library:Window(Table)
 				if typeof(Value) == "number" then
 					if Value > self.Max then 
 						Warn("'".. newSlider["1Label"].Text .. "' Value can't be greater than " .. self.Max)
-						self:Set(Slider.Default)
+						self:Set(Slider.Value)
 						return
 					elseif Value < self.Min  then
 						Warn("'".. newSlider["1Label"].Text .. "' Value can't be less than " .. self.Min) 
-						self:Set(Slider.Default)
+						self:Set(Slider.Value)
 						return
 					end
 
 					if Slider.Increment > 1 then
-						self.Default = math.clamp(Round(Value, self.Increment), self.Min, self.Max)
+						self.Value = math.clamp(Round(Value, self.Increment), self.Min, self.Max)
 					else
-						self.Default = math.floor(Value)
+						self.Value = math.floor(Value)
 					end
-					Tween(newSlider.Slider.Bar.Fill, "Size", UDim2.fromScale((self.Default - self.Min) / (self.Max - self.Min), 1), "Out", "Quint", 0.1)
-					Count.Text = self.Default
+					Tween(newSlider.Slider.Bar.Fill, "Size", UDim2.fromScale((self.Value - self.Min) / (self.Max - self.Min), 1), "Out", "Quint", 0.1)
+					Count.Text = self.Value
 					local x,y = pcall(function()
-						Slider.Callback(self.Default)
+						Slider.Value = self.Value
+						Slider.Callback(self.Value)
 						Library:Save()
 					end)
 					if not x then Warn(y) end
@@ -585,7 +585,7 @@ function Library:Window(Table)
 				AddSlider(Table, Parent)
 				return Slider
 			end
-			Slider:Set(Slider.Default)
+			Slider:Set(Slider.Value)
 			if Slider.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Slider.Flag] = Slider
 			end
@@ -604,7 +604,7 @@ function Library:Window(Table)
 				Toggled = false,
 			}
 			if Table.Options then
-				Dropdown.Default = Table.Default or Dropdown.Options[1] or false
+				Dropdown.Value = Table.Value or Dropdown.Options[1] or false
 			end
 			
 			local newdrop = DropdownButton:Clone(); newdrop.Parent = Parent
@@ -633,10 +633,12 @@ function Library:Window(Table)
 				end
 			end)
 			local function OnActivate(Option)
-				if Dropdown.Default ~= false then
+				if Dropdown.Value ~= false then
 					if Index(Dropdown.Options, Option) then
 						local x,y = pcall(function()
+							Dropdown.Value = Option
 							Dropdown.Callback(Option)
+							Library:Save()
 						end)
 						if x then Input.Text = Option else Warn(y) end
 					else
@@ -681,7 +683,6 @@ function Library:Window(Table)
 
 			function Dropdown:Set(Option)
 				OnActivate(Option)
-				Library:Save()
 			end
 			--Dropdown:Set(Dropdown.Default)
 			function Dropdown:Remove(Option)
@@ -1034,7 +1035,6 @@ function Library:Window(Table)
 			FPS:Set("Avg. FPS : " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start))))
 			if ping then PING:Set("Avg. PING : " .. ping.Text or 0) end	
 		end)
-		
 	end
 	Start = TimeFunction()
 	RunService.Heartbeat:Connect(HeartbeatUpdate)
@@ -1055,9 +1055,9 @@ function Library:Window(Table)
 	})
 	Misc:AddButton{Name = "Logs", 
 		Callback = function() 
-		setclipboard(HttpService:JSONEncode(Library.Logs))
-		Library:Notification{Content = "Logs copied to clipboard"}
-	end}
+			setclipboard(HttpService:JSONEncode(Library.Logs))
+			Library:Notification{Content = "Logs copied to clipboard"}
+		end}
 	Library:Notification({Content = "Loaded! \nUI: ExecLib v" .._G.Version})
 	return Tabs
 end
