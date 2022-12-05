@@ -102,7 +102,7 @@ end
 function Library:Save()
 	local Data = {}
 	for i,v in pairs(Library.Flags) do
-		if v.Type == "Colorpicker" then
+		if v.Type and v.Type == "Colorpicker" then
 			Data[i] = {R = v.Value.R * 255, G = v.Value.G * 255, B = v.Value.B * 255}
 		else
 			Data[i] = v.Value
