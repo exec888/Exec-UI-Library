@@ -100,11 +100,38 @@ else
 end
 
 function Library:Save()
-	--Filesystem makefolder(game.GameId)
+	local Data = {}
+	for i,v in pairs(Library.Flags) do
+		if v.Save then
+			if v.Type == "Colorpicker" then
+				--Data[i] = PackColor(v.Value)
+			else
+				Data[i] = v.Value
+			end
+		end	
+	end
+	writefile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
 function Library:Load()
-	--Filesystem
+	if isfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt") then
+		local Data = HttpService:JSONDecode(readfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt"))
+		table.foreach(Data, function(a,b)
+			if Library.Flags[a] then
+				spawn(function() 
+					if Library.Flags[a].Type == "Colorpicker" then
+						--Library.Flags[a]:Set(UnpackColor(b))
+					else
+						Library.Flags[a]:Set(b)
+					end    
+				end)
+			else
+				warn("Orion Library Config Loader - Could not find ", a ,b)
+				Warn("Filesystem could not find " .. a .." "..b)
+			end
+		end)
+	end
 end
+
 function ThemeObj(Table, GuiObject)
 	table.insert(Library.Theme[Table].Objects, GuiObject)
 end
@@ -357,6 +384,7 @@ function Library:Window(Table)
 				end
 				local x,y = pcall(function()
 					Toggle.Callback(Toggle.Value)
+					Library:Save()
 				end)
 				if not x then Warn(y) end
 			end
@@ -370,6 +398,9 @@ function Library:Window(Table)
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
 			end)
+			if Toggle.Flag then				
+				Library.Flags[Toggle.Flag] = Toggle
+			end
 
 			return Toggle
 		end
