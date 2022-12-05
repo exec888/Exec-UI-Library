@@ -102,13 +102,13 @@ end
 function Library:Save()
 	local Data = {}
 	for i,v in pairs(Library.Flags) do
-		if v.Save then
+		--if v.Save then
 			if v.Type == "Colorpicker" then
 				--Data[i] = PackColor(v.Value)
 			else
 				Data[i] = v.Value
 			end
-		end	
+		--end	
 	end
 	writefile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
@@ -125,7 +125,6 @@ function Library:Load()
 					end    
 				end)
 			else
-				warn("Orion Library Config Loader - Could not find ", a ,b)
 				Warn("Filesystem could not find " .. a .." "..b)
 			end
 		end)
