@@ -1020,20 +1020,22 @@ function Library:Window(Table)
 	local FrameUpdateTable = {}
 	local function HeartbeatUpdate()
 		LastIteration = TimeFunction()
-		if not FPS and PING then return end -- prevent error spam
 		for Index = #FrameUpdateTable, 1, -1 do
 			FrameUpdateTable[Index + 1] = FrameUpdateTable[Index] >= LastIteration - 1 and FrameUpdateTable[Index] or nil
 		end
 
 		FrameUpdateTable[1] = LastIteration
-		FPS:Set("Avg. FPS : " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start))))
-		if ping then PING:Set("Avg. PING : " .. ping.Text or 0) end
+		pcall(function()
+			FPS:Set("Avg. FPS : " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start))))
+			if ping then PING:Set("Avg. PING : " .. ping.Text or 0) end	
+		end)
+		
 	end
 	Start = TimeFunction()
 	RunService.Heartbeat:Connect(HeartbeatUpdate)
 	local rbx_join = loadstring(game:HttpGet('https://raw.githubusercontent.com/Player788/rbxscripts/main/roblox_join.lua'))()
 	local Misc = Settings:RightSection("Misc")
-	:AddTextBox({
+	Misc:AddTextBox({
 		Name = "Join Player",
 		Placeholder = "UserId",
 		Callback = function(userid)
@@ -1046,8 +1048,12 @@ function Library:Window(Table)
 			end
 		end
 	})
-
-	Library:Notification({Content = "Loaded! \nUI:ExecLib v" .._G.Version})
+	Misc:AddButton{Name = "Logs", 
+		Callback = function() 
+		setclipboard(HttpService:JSONEncode(Library.Logs))
+		Library:Notification{Content = "Logs copied to clipboard"}
+	end}
+	Library:Notification({Content = "Loaded! \nUI: ExecLib v" .._G.Version})
 	return Tabs
 end
 
