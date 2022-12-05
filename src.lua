@@ -1,4 +1,4 @@
-_G.Version = "1F"
+_G.Version = "1G"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -12,7 +12,7 @@ local Library = {
 		},
 		Saves = {
 			Folder = "raw",
-			Enabled = true,
+			Enabled = false,
 		},
 		Sounds = true,
 	},
@@ -208,7 +208,7 @@ function Library:Window(Table)
 		Library.Config.Saves.Folder = Table.Saves.Folder or Library.Config.Saves.Folder
 		if not isfolder(Library.Config.Saves.Folder) then
 			makefolder(Library.Config.Saves.Folder)
-		end
+		end	
 	end
 
 	Main.TopT.Title.Text = Library.Config.Name .. " | " .. Library.Config.Script
@@ -363,7 +363,9 @@ function Library:Window(Table)
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end,
 			}
-
+			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Toggle.Flag] = Toggle
+			end
 			local newToggle = ToggleButton:Clone(); newToggle.Parent = Parent
 			newToggle.Text.TextColor3 = Toggle.TextColor
 			newToggle.Visible = true
@@ -398,10 +400,7 @@ function Library:Window(Table)
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
 			end)
-			if Toggle.Flag then				
-				Library.Flags[Toggle.Flag] = Toggle
-			end
-
+			
 			return Toggle
 		end
 
@@ -414,7 +413,9 @@ function Library:Window(Table)
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end
 			}
-
+			if Keybind.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Keybind.Flag] = Keybind
+			end
 			local newBind = KeybindButton:Clone(); newBind.Parent = Parent
 			newBind.Text.TextColor3 = Keybind.TextColor
 			newBind.Text.Text = Table.Name or newBind.Text.Text
@@ -469,6 +470,7 @@ function Library:Window(Table)
 					Keybind.EnumItem  = EnumItem
 					newBind.Input.Text = EnumItem.Name
 					Focus = false
+					Library:Save()
 					-- Save
 				else
 					newBind.Input.Text = Keybind.EnumItem.Name
@@ -500,7 +502,9 @@ function Library:Window(Table)
 				Increment = Table.Increment or 1,
 				Callback = Table.Callback or function() end,
 			}
-
+			if Slider.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Slider.Flag] = Slider
+			end
 			local newSlider = SliderButton:Clone(); newSlider.Parent = Parent
 			newSlider.Visible = true local Label = newSlider["1Label"] local Count = newSlider.Slider.TextBox
 			Label.Text = Table.Name or Label.Text
@@ -566,6 +570,7 @@ function Library:Window(Table)
 					Count.Text = self.Default
 					local x,y = pcall(function()
 						Slider.Callback(self.Default)
+						Library:Save()
 					end)
 					if not x then Warn(y) end
 				else
@@ -598,10 +603,12 @@ function Library:Window(Table)
 			if Table.Options then
 				Dropdown.Default = Table.Default or Dropdown.Options[1] or false
 			end
-
+			if Dropdown.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Dropdown.Flag] = Dropdown
+			end
 			local newdrop = DropdownButton:Clone(); newdrop.Parent = Parent
 			local Label = newdrop["1Top"]["1Label"].Text
-			Label.Text = Label.Text
+			Label.Text = Table.Name or Label.Text
 			Label.TextColor3 = Dropdown.TextColor
 			newdrop.Visible = true
 			local Options = newdrop["3Options"]
@@ -673,6 +680,7 @@ function Library:Window(Table)
 
 			function Dropdown:Set(Option)
 				OnActivate(Option)
+				Library:Save()
 			end
 			--Dropdown:Set(Dropdown.Default)
 			function Dropdown:Remove(Option)
@@ -755,7 +763,11 @@ function Library:Window(Table)
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end,
 				Toggle = false,
+				Type = "Colorpicker"
 			}
+			if Colorpicker.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Colorpicker.Flag] = Colorpicker
+			end
 			local newColor = ColorpickerButton:Clone(); newColor.Parent = Parent
 			newColor.Visible = true
 			local Display = newColor["1ButtonDisplay"].Display
@@ -783,6 +795,7 @@ function Library:Window(Table)
 				Colorpicker.Value = Value
 				Display.BackgroundColor3 = Colorpicker.Value
 				Colorpicker.Callback(Display.BackgroundColor3)
+				Library:Save()
 			end
 			local function UpdateColorPicker()
 				Display.BackgroundColor3 = Color3.fromHSV(ColorH, ColorS, ColorV)
@@ -1007,6 +1020,7 @@ function Library:Window(Table)
 	local FrameUpdateTable = {}
 	local function HeartbeatUpdate()
 		LastIteration = TimeFunction()
+		if not FPS and PING then return end -- prevent error spam
 		for Index = #FrameUpdateTable, 1, -1 do
 			FrameUpdateTable[Index + 1] = FrameUpdateTable[Index] >= LastIteration - 1 and FrameUpdateTable[Index] or nil
 		end
@@ -1020,7 +1034,7 @@ function Library:Window(Table)
 	local rbx_join = loadstring(game:HttpGet('https://raw.githubusercontent.com/Player788/rbxscripts/main/roblox_join.lua'))()
 	local Misc = Settings:RightSection("Misc")
 	:AddTextBox({
-		Text = "Join Player",
+		Name = "Join Player",
 		Placeholder = "UserId",
 		Callback = function(userid)
 			Library:Notification({Title = 'Join Player', Content = "Searching..."})
@@ -1033,7 +1047,7 @@ function Library:Window(Table)
 		end
 	})
 
-	Library:Notification({Content = "Loaded! \nUI: ExecLib v" .._G.Version})
+	Library:Notification({Content = "Loaded! \nUI:ExecLib v" .._G.Version})
 	return Tabs
 end
 
