@@ -102,8 +102,10 @@ end
 function Library:Save()
 	local Data = {}
 	for i,v in pairs(Library.Flags) do
-		if v.Type and v.Type == "Colorpicker" then
-			Data[i] = {R = v.Value.R * 255, G = v.Value.G * 255, B = v.Value.B * 255}
+		if v.Type then
+			if v.Type == "Colorpicker" then
+				Data[i] = {R = v.Value.R * 255, G = v.Value.G * 255, B = v.Value.B * 255}
+			end
 		else
 			Data[i] = v.Value
 		end
@@ -363,9 +365,7 @@ function Library:Window(Table)
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end,
 			}
-			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
-				Library.Flags[Toggle.Flag] = Toggle
-			end
+			
 			local newToggle = ToggleButton:Clone(); newToggle.Parent = Parent
 			newToggle.Text.TextColor3 = Toggle.TextColor
 			newToggle.Visible = true
@@ -400,7 +400,9 @@ function Library:Window(Table)
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
 			end)
-			
+			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Toggle.Flag] = Toggle
+			end
 			return Toggle
 		end
 
@@ -413,9 +415,7 @@ function Library:Window(Table)
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end
 			}
-			if Keybind.Flag and Library.Config.Saves.Enabled == true then				
-				Library.Flags[Keybind.Flag] = Keybind
-			end
+			
 			local newBind = KeybindButton:Clone(); newBind.Parent = Parent
 			newBind.Text.TextColor3 = Keybind.TextColor
 			newBind.Text.Text = Table.Name or newBind.Text.Text
@@ -486,6 +486,9 @@ function Library:Window(Table)
 				return Keybind
 			end
 			Keybind:Set(Keybind.EnumItem)
+			if Keybind.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Keybind.Flag] = Keybind
+			end
 			return Keybind
 
 		end
@@ -502,9 +505,7 @@ function Library:Window(Table)
 				Increment = Table.Increment or 1,
 				Callback = Table.Callback or function() end,
 			}
-			if Slider.Flag and Library.Config.Saves.Enabled == true then				
-				Library.Flags[Slider.Flag] = Slider
-			end
+			
 			local newSlider = SliderButton:Clone(); newSlider.Parent = Parent
 			newSlider.Visible = true local Label = newSlider["1Label"] local Count = newSlider.Slider.TextBox
 			Label.Text = Table.Name or Label.Text
@@ -586,6 +587,9 @@ function Library:Window(Table)
 				return Slider
 			end
 			Slider:Set(Slider.Default)
+			if Slider.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Slider.Flag] = Slider
+			end
 			return Slider
 		end
 
@@ -603,9 +607,7 @@ function Library:Window(Table)
 			if Table.Options then
 				Dropdown.Default = Table.Default or Dropdown.Options[1] or false
 			end
-			if Dropdown.Flag and Library.Config.Saves.Enabled == true then				
-				Library.Flags[Dropdown.Flag] = Dropdown
-			end
+			
 			local newdrop = DropdownButton:Clone(); newdrop.Parent = Parent
 			local Label = newdrop["1Top"]["1Label"].Text
 			Label.Text = Table.Name or Label.Text
@@ -751,6 +753,9 @@ function Library:Window(Table)
 				return Dropdown
 			end
 			Dropdown:Refresh(Dropdown.Options, true)
+			if Dropdown.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Dropdown.Flag] = Dropdown
+			end
 			return Dropdown
 		end
 
@@ -765,9 +770,7 @@ function Library:Window(Table)
 				Toggle = false,
 				Type = "Colorpicker"
 			}
-			if Colorpicker.Flag and Library.Config.Saves.Enabled == true then				
-				Library.Flags[Colorpicker.Flag] = Colorpicker
-			end
+			
 			local newColor = ColorpickerButton:Clone(); newColor.Parent = Parent
 			newColor.Visible = true
 			local Display = newColor["1ButtonDisplay"].Display
@@ -871,6 +874,9 @@ function Library:Window(Table)
 			function Colorpicker:AddColor(Table)
 				AddColor(Table, Parent)
 				return Colorpicker
+			end
+			if Colorpicker.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Colorpicker.Flag] = Colorpicker
 			end
 			return Colorpicker
 		end
