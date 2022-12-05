@@ -1071,13 +1071,7 @@ end
 
 function Library:Get(str)
 	if not Library.Flags[str] then Warn("Key : " .. str .. " not found.") return end
-	local toReturn
-	if Library.Flags[str].Options then
-		toReturn = Library.Flags[str].Options
-	else
-		toReturn = Library.Flags[str].Value
-	end
-	return toReturn
+	return Library.Flags[str].Value
 end
 
 function Library:Destroy()
