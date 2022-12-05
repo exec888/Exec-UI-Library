@@ -1,4 +1,4 @@
-_G.Version = "1C"
+_G.Version = "1D"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -99,10 +99,10 @@ else
 	Exec.Parent = game.Players.LocalPlayer.PlayerGui
 end
 
-function Library.Save()
+function Library:Save()
 	--Filesystem makefolder(game.GameId)
 end
-function Library.Load()
+function Library:Load()
 	--Filesystem
 end
 function ThemeObj(Table, GuiObject)
@@ -167,6 +167,7 @@ function Library:Notification(Table)
 end
 
 function Library:Window(Table)
+	Exec.Enabled = true
 	ThemeObj("Primary", Main) ThemeObj("Secondary", Main.TopT)
 	ThemeObj("Secondary", Main.ContainerT) ThemeObj("Primary", Main.ContainerT.ElementsT)
 	ThemeObj("Primary", Main.ContainerT.TabsT)
