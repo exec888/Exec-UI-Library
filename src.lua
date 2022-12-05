@@ -105,10 +105,11 @@ function Library:Save()
 		if v.Type == "Colorpicker" then
 			Data[i] = {R = v.Value.R * 255, G = v.Value.G * 255, B = v.Value.B * 255}
 		else
-			Data[i] = v.Value or v.EnumItem or v.Default
+			Data[i] = v.Value
 		end
-		writefile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt", tostring(HttpService:JSONEncode(Data)))
+		
 	end
+	writefile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
 function Library:Load()
 	if isfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt") then
