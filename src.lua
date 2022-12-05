@@ -214,7 +214,7 @@ function Library:Window(Table)
 	Main.TopT.Title.Text = Library.Config.Name .. " | " .. Library.Config.Script
 
 	local Tabs = {}
-
+	local Selected
 	function Tabs:AddTab(Table)
 		local TabButton = TabButton:Clone(); TabButton.Parent = Main.ContainerT.TabsT.TabsScrollingFrame
 		TabButton.Visible = true
@@ -234,23 +234,24 @@ function Library:Window(Table)
 		ThemeObj("Primary", LeftSection) ThemeObj("Primary", RightSection)
 
 		local function onToggle()
-			for _, v in pairs(Main.ContainerT.TabsT.TabsScrollingFrame:GetChildren()) do
+			for _, v in next, Main.ContainerT.TabsT.TabsScrollingFrame:GetChildren() do
 				if v:IsA("Frame") then
 					v.SelectT.Visible = false
 					Tween(v, "BackgroundTransparency", 1)
-					Tween(v.Text, "TextColor3", v.Text:GetAttribute("Idle"))
-				end
+					Tween(v.Text, "TextTransparency", 0.5)
+				end    
 			end
-			for _, v in pairs(Main.ContainerT.ElementsT:GetChildren()) do
+			for _, v in next, Main.ContainerT.ElementsT:GetChildren() do
 				if v:IsA("ScrollingFrame") then
 					v.Visible = false
-				end
+				end    
 			end
-			TabFrame.Visible = true
-			TabButton.SelectT.Visible = true
 			Tween(TabButton, "BackgroundTransparency", 0)
-			Tween(TabButton.Text, "TextColor3", TabButton.Text:GetAttribute("Active"))
-			Selected = TabButton.Text:GetAttribute("Active")
+			Tween(TabButton.Text, "TextTransparency", 0)
+		
+			TabFrame.Visible = true
+			TabButton.SelectT.Visible = true   
+			Selected = TabButton
 		end
 
 		local TabClick = OnClick({TabButton, 
@@ -259,9 +260,11 @@ function Library:Window(Table)
 			end
 		})
 		TabClick.MouseEnter:Connect(function()
-			Tween(TabButton.Text, "TextColor3", TabButton.Text:GetAttribute("Active"))
+			Tween(TabButton.Text, "TextTransparency", 0)
 		end); TabClick.MouseLeave:Connect(function()
-			Tween(TabButton.Text, "TextColor3", Selected)
+			if Selected ~= TabButton then
+				Tween(TabButton.Text, "TextTransparency", 0.5)
+			end
 		end)
 
 		-- BUTTON
