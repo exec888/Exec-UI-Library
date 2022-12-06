@@ -1,4 +1,4 @@
-_G.Version = "1O"
+_G.Version = "1P"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -393,7 +393,7 @@ function Library:Window(Table)
 				end)
 				if not x then Warn(y) end
 			end
-			Toggle:Set(Toggle.Value)
+			--Toggle:Set(Toggle.Value)
 			function Toggle:Destroy()
 				newToggle:Destroy()
 			end
