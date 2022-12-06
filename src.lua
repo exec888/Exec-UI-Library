@@ -1,4 +1,4 @@
-_G.Version = "1U"
+_G.Version = "1V"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -809,7 +809,9 @@ function Library:Window(Table)
 				Colorpicker.Value = Value
 				Display.BackgroundColor3 = Colorpicker.Value
 				Colorpicker.Callback(Display.BackgroundColor3)
-				Library:Save()
+				if Table.Flag and Library.Config.Saves.Enabled == true then				
+					Library:Save()
+				end
 			end
 			local function UpdateColorPicker()
 				Display.BackgroundColor3 = Color3.fromHSV(ColorH, ColorS, ColorV)
