@@ -387,7 +387,6 @@ function Library:Window(Table)
 				end
 				local x,y = pcall(function()
 					Toggle.Callback(Toggle.Value)
-					Library:Save()
 				end)
 				if not x then Warn(y) end
 			end
@@ -400,6 +399,7 @@ function Library:Window(Table)
 			end
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
+				Library:Save()
 			end)
 			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Toggle.Flag] = Toggle
