@@ -1,4 +1,4 @@
-_G.Version = "1N"
+_G.Version = "1O"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -368,9 +368,7 @@ function Library:Window(Table)
 				Callback = Table.Callback or function() end,
 				Type = "Toggle",
 			}
-			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
-				Library.Flags[Toggle.Flag] = Toggle
-			end
+			
 			local newToggle = ToggleButton:Clone(); newToggle.Parent = Parent
 			newToggle.Text.TextColor3 = Toggle.TextColor
 			newToggle.Visible = true
@@ -406,7 +404,9 @@ function Library:Window(Table)
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
 			end)
-			
+			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Toggle.Flag] = Toggle
+			end
 			return Toggle
 		end
 
