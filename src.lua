@@ -1,4 +1,4 @@
-_G.Version = "1R"
+_G.Version = "1S"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -476,7 +476,7 @@ function Library:Window(Table)
 					Keybind.Value  = EnumItem
 					newBind.Input.Text = EnumItem.Name
 					Focus = false
-					Library:Save()
+					--Library:Save()
 					-- Save
 				else
 					newBind.Input.Text = Keybind.Value.Name
@@ -578,7 +578,7 @@ function Library:Window(Table)
 					local x,y = pcall(function()
 						Slider.Value = self.Value
 						Slider.Callback(self.Value)
-						Library:Save()
+						--Library:Save()
 					end)
 					if not x then Warn(y) end
 				else
@@ -647,7 +647,7 @@ function Library:Window(Table)
 						local x,y = pcall(function()
 							Dropdown.Value = Option
 							Dropdown.Callback(Option)
-							Library:Save()
+							--Library:Save()
 						end)
 						if x then Input.Text = Option else Warn(y) end
 					else
@@ -807,7 +807,7 @@ function Library:Window(Table)
 				Colorpicker.Value = Value
 				Display.BackgroundColor3 = Colorpicker.Value
 				Colorpicker.Callback(Display.BackgroundColor3)
-				Library:Save()
+				--Library:Save()
 			end
 			local function UpdateColorPicker()
 				Display.BackgroundColor3 = Color3.fromHSV(ColorH, ColorS, ColorV)
