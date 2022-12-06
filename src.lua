@@ -651,7 +651,7 @@ function Library:Window(Table)
 						end)
 						if x then Input.Text = Option else Warn(y) end
 					else
-						OnActivate(Dropdown.Options[1])
+						OnActivate(Dropdown.Value)
 						Warn("'" .. Label.Text .. "' " .. tostring(Option) .. " is not an available option to set")
 					end
 					Dropdown.Toggled = false
