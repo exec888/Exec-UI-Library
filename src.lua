@@ -108,11 +108,12 @@ function Library:Save()
 			Data[i] = v.Value
 		end
 	end
-	writefile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt", tostring(HttpService:JSONEncode(Data)))
+	writefile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
 function Library:Load()
 	if isfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt") then
-		local Data = HttpService:JSONDecode(readfile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt"))
+		local file = readfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt")
+		local Data = HttpService:JSONDecode(file)
 		table.foreach(Data, function(a,b)
 			if Library.Flags[a] then
 				spawn(function() 
@@ -392,7 +393,7 @@ function Library:Window(Table)
 				end)
 				if not x then Warn(y) end
 			end
-			--Toggle:Set(Toggle.Value)
+			Toggle:Set(Toggle.Value)
 			function Toggle:Destroy()
 				newToggle:Destroy()
 			end
