@@ -1,4 +1,4 @@
-_G.Version = "1M"
+_G.Version = "1N"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -112,7 +112,7 @@ function Library:Save()
 end
 function Library:Load()
 	if isfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt") then
-		local Data = HttpService:JSONDecode(readfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt"))
+		local Data = HttpService:JSONDecode(readfile(Library.Config.Saves.Folder .. "/" .. tostring(game.GameId) .. ".txt"))
 		table.foreach(Data, function(a,b)
 			if Library.Flags[a] then
 				spawn(function() 
@@ -126,6 +126,7 @@ function Library:Load()
 				Warn("Filesystem could not find flag '" .. a .."'")
 			end
 		end)
+		Library:Notification{Content = "Save loaded!"}
 	end
 end
 
@@ -367,7 +368,9 @@ function Library:Window(Table)
 				Callback = Table.Callback or function() end,
 				Type = "Toggle",
 			}
-			
+			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
+				Library.Flags[Toggle.Flag] = Toggle
+			end
 			local newToggle = ToggleButton:Clone(); newToggle.Parent = Parent
 			newToggle.Text.TextColor3 = Toggle.TextColor
 			newToggle.Visible = true
@@ -388,6 +391,7 @@ function Library:Window(Table)
 				end
 				local x,y = pcall(function()
 					Toggle.Callback(Toggle.Value)
+					Library:Save()
 				end)
 				if not x then Warn(y) end
 			end
@@ -401,11 +405,8 @@ function Library:Window(Table)
 			end
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
-				Library:Save()
 			end)
-			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
-				Library.Flags[Toggle.Flag] = Toggle
-			end
+			
 			return Toggle
 		end
 
