@@ -1,4 +1,4 @@
-_G.Version = "1K"
+_G.Version = "1L"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -390,6 +390,7 @@ function Library:Window(Table)
 				end)
 				if not x then Warn(y) end
 			end
+			Toggle:Set(Toggle.Value)
 			function Toggle:Destroy()
 				newToggle:Destroy()
 			end
@@ -398,8 +399,8 @@ function Library:Window(Table)
 				return Toggle
 			end
 			newToggle.TextButton.Activated:Connect(function()
-				Toggle:Set(not Toggle.Value)
 				Library:Save()
+				Toggle:Set(not Toggle.Value)
 			end)
 			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Toggle.Flag] = Toggle
@@ -414,7 +415,8 @@ function Library:Window(Table)
 				Flag = Table.Flag or false,
 				Hold = Table.Hold or false,
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
-				Callback = Table.Callback or function() end
+				Callback = Table.Callback or function() end,
+				Type = "Bind"
 			}
 			
 			local newBind = KeybindButton:Clone(); newBind.Parent = Parent
@@ -605,6 +607,7 @@ function Library:Window(Table)
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end,
 				Toggled = false,
+				Type = "Dropdown"
 			}
 			if Table.Options then
 				Dropdown.Value = Table.Value or Dropdown.Options[1] or false
