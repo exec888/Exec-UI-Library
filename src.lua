@@ -1,4 +1,4 @@
-_G.Version = "1S"
+_G.Version = "1T"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -405,7 +405,7 @@ function Library:Window(Table)
 				Toggle:Set(not Toggle.Value)
 				Library:Save()
 			end)
-			if Toggle.Flag and Library.Config.Saves.Enabled == true then				
+			if Table.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Toggle.Flag] = Toggle
 			end
 			return Toggle
@@ -476,7 +476,7 @@ function Library:Window(Table)
 					Keybind.Value  = EnumItem
 					newBind.Input.Text = EnumItem.Name
 					Focus = false
-					--Library:Save()
+					Library:Save()
 					-- Save
 				else
 					newBind.Input.Text = Keybind.Value.Name
@@ -492,7 +492,7 @@ function Library:Window(Table)
 				return Keybind
 			end
 			Keybind:Set(Keybind.Value)
-			if Keybind.Flag and Library.Config.Saves.Enabled == true then				
+			if Table.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Keybind.Flag] = Keybind
 			end
 			return Keybind
@@ -578,7 +578,7 @@ function Library:Window(Table)
 					local x,y = pcall(function()
 						Slider.Value = self.Value
 						Slider.Callback(self.Value)
-						--Library:Save()
+						Library:Save()
 					end)
 					if not x then Warn(y) end
 				else
@@ -594,7 +594,7 @@ function Library:Window(Table)
 				return Slider
 			end
 			Slider:Set(Slider.Value)
-			if Slider.Flag and Library.Config.Saves.Enabled == true then				
+			if Table.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Slider.Flag] = Slider
 			end
 			return Slider
@@ -647,7 +647,7 @@ function Library:Window(Table)
 						local x,y = pcall(function()
 							Dropdown.Value = Option
 							Dropdown.Callback(Option)
-							--Library:Save()
+							Library:Save()
 						end)
 						if x then Input.Text = Option else Warn(y) end
 					else
@@ -762,7 +762,7 @@ function Library:Window(Table)
 				return Dropdown
 			end
 			Dropdown:Refresh(Dropdown.Options, true)
-			if Dropdown.Flag and Library.Config.Saves.Enabled == true then				
+			if Table.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Dropdown.Flag] = Dropdown
 			end
 			return Dropdown
@@ -807,7 +807,7 @@ function Library:Window(Table)
 				Colorpicker.Value = Value
 				Display.BackgroundColor3 = Colorpicker.Value
 				Colorpicker.Callback(Display.BackgroundColor3)
-				--Library:Save()
+				Library:Save()
 			end
 			local function UpdateColorPicker()
 				Display.BackgroundColor3 = Color3.fromHSV(ColorH, ColorS, ColorV)
@@ -884,7 +884,7 @@ function Library:Window(Table)
 				AddColor(Table, Parent)
 				return Colorpicker
 			end
-			if Colorpicker.Flag and Library.Config.Saves.Enabled == true then				
+			if Table.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Colorpicker.Flag] = Colorpicker
 			end
 			return Colorpicker
