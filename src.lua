@@ -1,4 +1,4 @@
-_G.Version = "1T"
+_G.Version = "1U"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -413,6 +413,7 @@ function Library:Window(Table)
 
 		-- BIND
 		local function AddBind(Table, Parent)
+			print("BIND LOCAL")
 			local Keybind = {
 				Value = Table.Default or Enum.KeyCode.LeftAlt, 
 				Flag = Table.Flag or false,
@@ -501,7 +502,7 @@ function Library:Window(Table)
 
 		-- SLIDER
 		local function AddSlider(Table, Parent)
-
+			print("SLIDER LOCAL")
 			local Slider = {
 				Min = Table.Min or 0,
 				Max = Table.Max or Table.Default or 25,
@@ -602,7 +603,7 @@ function Library:Window(Table)
 
 		-- DROPDOWN
 		local function AddDropdown(Table, Parent)
-
+			print("DP LOCAL")
 			local Dropdown = {
 				Options = Table.Options or {},
 				Default = false,
@@ -770,6 +771,7 @@ function Library:Window(Table)
 
 		-- COLORPICKER
 		local function AddColor(Table, Parent)
+			print("COLOR LOCAL")
 			local ColorH, ColorS, ColorV = 1, 1, 1
 			local Colorpicker = {
 				Value = Table.Default or Color3.fromRGB(85, 170, 127),
