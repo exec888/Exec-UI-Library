@@ -1,4 +1,4 @@
-_G.Version = "2B"
+_G.Version = "2C"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -617,11 +617,9 @@ function Library:Window(Table)
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end,
 				Toggled = false,
+				Value = Table.Default or false;
 				Type = "Dropdown"
 			}
-			if Table.Options then
-				Dropdown.Value = Table.Value or Dropdown.Options[1] or false
-			end
 			
 			local newdrop = DropdownButton:Clone(); newdrop.Parent = Parent
 			local Label = newdrop["1Top"]["1Label"].Text
@@ -649,21 +647,19 @@ function Library:Window(Table)
 				end
 			end)
 			local function OnActivate(Option)
-				if Dropdown.Value ~= false then
-					if Index(Dropdown.Options, Option) then
-						local x,y = pcall(function()
-							Dropdown.Value = Option
-							Dropdown.Callback(Option)
-						end)
-						if x then Input.Text = Option else Warn(y) end
-					else
-						OnActivate(Dropdown.Value)
-						Warn("'" .. Label.Text .. "' " .. tostring(Option) .. " is not an available option to set")
-					end
-					Dropdown.Toggled = false
-					Options.Visible = false
-					Tween(Button.ImageButton, "Rotation", 180)
+				if Index(Dropdown.Options, Option) then
+					local x,y = pcall(function()
+						Dropdown.Value = Option
+						Dropdown.Callback(Option)
+					end)
+					if x then Input.Text = Option else Warn(y) end
+				else
+					OnActivate(Dropdown.Value)
+					Warn("'" .. Label.Text .. "' " .. tostring(Option) .. " is not an available option to set")
 				end
+				Dropdown.Toggled = false
+				Options.Visible = false
+				Tween(Button.ImageButton, "Rotation", 180)
 			end
 			Input.Focused:Connect(function()
 				Dropdown.Toggled = true
