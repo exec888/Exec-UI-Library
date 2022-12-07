@@ -1066,6 +1066,7 @@ function Library:Window(Table)
 
 		FrameUpdateTable[1] = LastIteration
 		pcall(function()
+			if not Exec then return end
 			FPS:Set("Avg. FPS : " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start))))
 			if ping then PING:Set("Avg. PING : " .. ping.Text or 0) end	
 		end)
