@@ -705,7 +705,7 @@ function Library:Window(Table)
 			function Dropdown:Set(Option)
 				OnActivate(Option)
 			end
-			Dropdown:Set(Dropdown.Value)
+			--Dropdown:Set(Dropdown.Value)
 			function Dropdown:Remove(Option)
 				if Index(Dropdown.Options, Option) then
 					for index, v in pairs(Dropdown.Options) do
