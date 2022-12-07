@@ -121,7 +121,7 @@ function Library:Load()
 				spawn(function() 
 					if Library.Flags[a].Type == "Colorpicker" then
 						Library.Flags[a]:Set(Color3.fromRGB(b.R, b.G, b.B))
-					elseif v.Type == "Bind" then
+					elseif Library.Flags[a].Type == "Bind" then
 						Library.Flags[a]:Set(Enum.KeyCode[b])
 					else
 						Library.Flags[a]:Set(b)
