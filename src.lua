@@ -1,4 +1,4 @@
-_G.Version = "1V"
+_G.Version = "1X"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -104,6 +104,8 @@ function Library:Save()
 	for i,v in pairs(Library.Flags) do
 		if v.Type == "Colorpicker" then
 			Data[i] = {R = v.Value.R * 255, G = v.Value.G * 255, B = v.Value.B * 255}
+		elseif v.Type == "Bind" then
+			Data[i] = v.Value.Name
 		else
 			Data[i] = v.Value
 		end
@@ -119,6 +121,8 @@ function Library:Load()
 				spawn(function() 
 					if Library.Flags[a].Type == "Colorpicker" then
 						Library.Flags[a]:Set(Color3.fromRGB(b.R, b.G, b.B))
+					elseif v.Type == "Bind" then
+						Library.Flags[a]:Set(Enum.KeyCode[b])
 					else
 						Library.Flags[a]:Set(b)
 					end    
@@ -362,6 +366,7 @@ function Library:Window(Table)
 
 		-- TOGGLE
 		local function AddToggle(Table, Parent)
+			print("TOGGLE LOCAL")
 			local Toggle = {
 				Value = Table.Default or false, 
 				Flag = Table.Flag or false, 
@@ -383,6 +388,9 @@ function Library:Window(Table)
 
 			function Toggle:Set(Boolean)
 				Toggle.Value = Boolean
+				if Table.Flag and Library.Config.Saves.Enabled == true then
+					Library:Save()
+				end
 				if Boolean then
 					Tween(newToggle.TextButton, "BackgroundColor3", Library.Theme.Accent.Color)
 				elseif not Boolean then
@@ -403,7 +411,6 @@ function Library:Window(Table)
 			end
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
-				Library:Save()
 			end)
 			if Table.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Toggle.Flag] = Toggle
@@ -477,7 +484,10 @@ function Library:Window(Table)
 					Keybind.Value  = EnumItem
 					newBind.Input.Text = EnumItem.Name
 					Focus = false
-					Library:Save()
+					if Table.Flag and Library.Config.Saves.Enabled == true then
+						Library:Save()
+					end
+					
 					-- Save
 				else
 					newBind.Input.Text = Keybind.Value.Name
@@ -579,7 +589,9 @@ function Library:Window(Table)
 					local x,y = pcall(function()
 						Slider.Value = self.Value
 						Slider.Callback(self.Value)
-						Library:Save()
+						if Table.Flag and Library.Config.Saves.Enabled == true then
+							Library:Save()
+						end
 					end)
 					if not x then Warn(y) end
 				else
@@ -606,7 +618,6 @@ function Library:Window(Table)
 			print("DP LOCAL")
 			local Dropdown = {
 				Options = Table.Options or {},
-				Default = false,
 				Flag = Table.Flag or false,
 				TextColor = Table.TextColor or Library.Theme.Text.Color,
 				Callback = Table.Callback or function() end,
@@ -648,7 +659,9 @@ function Library:Window(Table)
 						local x,y = pcall(function()
 							Dropdown.Value = Option
 							Dropdown.Callback(Option)
-							Library:Save()
+							if Table.Flag and Library.Config.Saves.Enabled == true then
+								Library:Save()
+							end
 						end)
 						if x then Input.Text = Option else Warn(y) end
 					else
@@ -694,7 +707,7 @@ function Library:Window(Table)
 			function Dropdown:Set(Option)
 				OnActivate(Option)
 			end
-			--Dropdown:Set(Dropdown.Default)
+			Dropdown:Set(Dropdown.Value)
 			function Dropdown:Remove(Option)
 				if Index(Dropdown.Options, Option) then
 					for index, v in pairs(Dropdown.Options) do
