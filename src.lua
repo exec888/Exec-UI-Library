@@ -1,4 +1,4 @@
-_G.Version = "1Z"
+_G.Version = "2A"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -116,21 +116,36 @@ function Library:Load()
 	if isfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt") then
 		local file = readfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt")
 		local Data = HttpService:JSONDecode(file)
-		table.foreach(Data, function(a,b)
-			if Library.Flags[a] then
+-- 		table.foreach(Data, function(a,b)
+-- 			if Library.Flags[a] then
+-- 				spawn(function() 
+-- 					if Library.Flags[a].Type == "Colorpicker" then
+-- 						Library.Flags[a]:Set(Color3.fromRGB(b.R, b.G, b.B))
+-- 					elseif Library.Flags[a].Type == "Bind" then
+-- 						Library.Flags[a]:Set(Enum.KeyCode[b])
+-- 					else
+-- 						Library.Flags[a]:Set(b)
+-- 					end    
+-- 				end)
+-- 			else
+-- 				Warn("Filesystem could not find flag '" .. a .."'")
+-- 			end
+-- 		end)
+		for i,v in pairs(Data) do
+			if Library.Flags[i] then
 				spawn(function() 
-					if Library.Flags[a].Type == "Colorpicker" then
-						Library.Flags[a]:Set(Color3.fromRGB(b.R, b.G, b.B))
-					elseif Library.Flags[a].Type == "Bind" then
-						Library.Flags[a]:Set(Enum.KeyCode[b])
+					if Library.Flags[i].Type == "Colorpicker" then
+						Library.Flags[i]:Set(Color3.fromRGB(v.R, b.v, v.B))
+					elseif Library.Flags[i].Type == "Bind" then
+						Library.Flags[i]:Set(Enum.KeyCode[v])
 					else
-						Library.Flags[a]:Set(b)
+						Library.Flags[i]:Set(v)
 					end    
 				end)
 			else
-				Warn("Filesystem could not find flag '" .. a .."'")
+				Warn("Filesystem could not find flag '" .. i .."'")
 			end
-		end)
+		end
 		Library:Notification{Content = "Save loaded!"}
 	end
 end
