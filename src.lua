@@ -377,7 +377,7 @@ function Library:Window(Table)
 			local newToggle = ToggleButton:Clone(); newToggle.Parent = Parent
 			newToggle.Text.TextColor3 = Toggle.TextColor
 			newToggle.Visible = true
-			newToggle.Text.Text = Table.Text or newToggle.Text.Text
+			newToggle.Text.Text = Table.Name or newToggle.Text.Text
 			ThemeObj("Tertiary", newToggle) ThemeObj("Text", newToggle.Text)
 			ThemeObj("Secondary", newToggle.TextButton)
 
