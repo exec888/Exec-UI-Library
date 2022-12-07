@@ -162,8 +162,8 @@ Dropdown:Set(<index>)
 ___
 ## Miscellaneous
 
-### Adding Flags
-- Flags are used as global variables to store (Values, Tables etc.) Toggles, Sliders, Dropdowns & binds. Filesystem not yet implemented.
+### Saves (Filesystem)
+- Flags are used as global variables to store (Values, Tables etc.) Toggles, Sliders, Dropdowns & binds. Adding a flag value will automatically save its configs.
 Example:
 ```lua
 LeftSection:AddToggle({
@@ -174,8 +174,9 @@ LeftSection:AddToggle({
 ```
 #### Methods
 ```lua
-Library:Get(<Flag : string>)
-<returns value>
+Library:Get(<Flag : string>) <returns value>
+Library:Save()
+Library:Load() -- Always add at last or in a button
 ```
 ___
 ### Library Methods
