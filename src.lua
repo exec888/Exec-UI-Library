@@ -623,13 +623,15 @@ function Library:Window(Table)
 			
 			local newdrop = DropdownButton:Clone(); newdrop.Parent = Parent
 			local Label = newdrop["1Top"]["1Label"].Text
-			Label.Text = Table.Name or Label.Text
-			Label.TextColor3 = Dropdown.TextColor
-			newdrop.Visible = true
 			local Options = newdrop["3Options"]
 			local OptTemp = OptionFrame
 			local Input = newdrop["1Top"]["2ButtonBox"].TextBox
 			local Button = newdrop["1Top"]["2ButtonBox"].TextButton
+			Input.PlaceholderText = Table.Placeholder or Input.PlaceholderText
+			Label.Text = Table.Name or Label.Text
+			Label.TextColor3 = Dropdown.TextColor
+			newdrop.Visible = true
+			
 			ThemeObj("Tertiary", newdrop["1Top"]["2ButtonBox"]) ThemeObj("Text", Label)
 			ThemeObj("Secondary", Options) ThemeObj("PlaceholderText", Input)
 
