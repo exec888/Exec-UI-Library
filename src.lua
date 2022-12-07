@@ -1,4 +1,4 @@
-_G.Version = "1Y"
+_G.Version = "1Z"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -388,9 +388,6 @@ function Library:Window(Table)
 
 			function Toggle:Set(Boolean)
 				Toggle.Value = Boolean
-				if Table.Flag and Library.Config.Saves.Enabled == true then
-					Library:Save()
-				end
 				if Boolean then
 					Tween(newToggle.TextButton, "BackgroundColor3", Library.Theme.Accent.Color)
 				elseif not Boolean then
@@ -411,6 +408,9 @@ function Library:Window(Table)
 			end
 			newToggle.TextButton.Activated:Connect(function()
 				Toggle:Set(not Toggle.Value)
+				if Table.Flag and Library.Config.Saves.Enabled == true then
+					Library:Save()
+				end
 			end)
 			if Table.Flag and Library.Config.Saves.Enabled == true then				
 				Library.Flags[Toggle.Flag] = Toggle
@@ -452,6 +452,9 @@ function Library:Window(Table)
 			UserInputService.InputBegan:Connect(function(Input)
 				if Focus and Input.UserInputType == Enum.UserInputType.Keyboard then
 					Keybind:Set(Input.KeyCode)
+					if Table.Flag and Library.Config.Saves.Enabled == true then
+						Library:Save()
+					end
 				elseif not Focus and Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode == Keybind.Value then
 					if Keybind.Hold then
 						Holding = true
@@ -484,10 +487,6 @@ function Library:Window(Table)
 					Keybind.Value  = EnumItem
 					newBind.Input.Text = EnumItem.Name
 					Focus = false
-					if Table.Flag and Library.Config.Saves.Enabled == true then
-						Library:Save()
-					end
-					
 					-- Save
 				else
 					newBind.Input.Text = Keybind.Value.Name
@@ -559,7 +558,10 @@ function Library:Window(Table)
 			UserInputService.InputChanged:Connect(function(input)
 				if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
 					local SizeScale = math.clamp((input.Position.X - SliderBar.AbsolutePosition.X) / SliderBar.AbsoluteSize.X, 0, 1)
-					Slider:Set(Slider.Min + ((Slider.Max - Slider.Min) * SizeScale)) 
+					Slider:Set(Slider.Min + ((Slider.Max - Slider.Min) * SizeScale))
+					if Table.Flag and Library.Config.Saves.Enabled == true then
+						Library:Save()
+					end
 				end
 			end)
 			local function Round(Number, Factor)
@@ -589,9 +591,6 @@ function Library:Window(Table)
 					local x,y = pcall(function()
 						Slider.Value = self.Value
 						Slider.Callback(self.Value)
-						if Table.Flag and Library.Config.Saves.Enabled == true then
-							Library:Save()
-						end
 					end)
 					if not x then Warn(y) end
 				else
@@ -659,9 +658,6 @@ function Library:Window(Table)
 						local x,y = pcall(function()
 							Dropdown.Value = Option
 							Dropdown.Callback(Option)
-							if Table.Flag and Library.Config.Saves.Enabled == true then
-								Library:Save()
-							end
 						end)
 						if x then Input.Text = Option else Warn(y) end
 					else
@@ -682,8 +678,14 @@ function Library:Window(Table)
 				if not enterPressed then return end
 				if typeof(tonumber(Input.Text)) == "number" then
 					OnActivate(tonumber(Input.Text))
+					if Table.Flag and Library.Config.Saves.Enabled == true then
+						Library:Save()
+					end
 				elseif typeof(Input.Text) == "string" then
 					OnActivate(Input.Text)
+					if Table.Flag and Library.Config.Saves.Enabled == true then
+						Library:Save()
+					end
 				end
 			end)
 			Input.Changed:Connect(function()
@@ -729,6 +731,9 @@ function Library:Window(Table)
 					newOp.Text.Text = v
 					newOp.Text.Activated:Connect(function()
 						OnActivate(v)
+						if Table.Flag and Library.Config.Saves.Enabled == true then
+							Library:Save()
+						end
 					end)
 				elseif typeof(v) == "string" then
 					local newOp = OptTemp:Clone()
@@ -738,6 +743,9 @@ function Library:Window(Table)
 					newOp.Text.Text = v
 					newOp.Text.Activated:Connect(function()
 						OnActivate(v)
+						if Table.Flag and Library.Config.Saves.Enabled == true then
+							Library:Save()
+						end
 					end)
 				elseif typeof(v) == "boolean" then
 					Warn("'" .. Label.Text .. "' cannot set boolean as option")
@@ -822,14 +830,14 @@ function Library:Window(Table)
 				Colorpicker.Value = Value
 				Display.BackgroundColor3 = Colorpicker.Value
 				Colorpicker.Callback(Display.BackgroundColor3)
-				if Table.Flag and Library.Config.Saves.Enabled == true then				
-					Library:Save()
-				end
 			end
 			local function UpdateColorPicker()
 				Display.BackgroundColor3 = Color3.fromHSV(ColorH, ColorS, ColorV)
 				Color.BackgroundColor3 = Color3.fromHSV(ColorH, 1, 1)
 				Colorpicker:Set(Display.BackgroundColor3)
+				if Table.Flag and Library.Config.Saves.Enabled == true then				
+					Library:Save()
+				end
 			end 
 
 			local dragging
