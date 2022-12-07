@@ -116,21 +116,6 @@ function Library:Load()
 	if isfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt") then
 		local file = readfile(Library.Config.Saves.Folder .. "/" .. game.GameId .. ".txt")
 		local Data = HttpService:JSONDecode(file)
--- 		table.foreach(Data, function(a,b)
--- 			if Library.Flags[a] then
--- 				spawn(function() 
--- 					if Library.Flags[a].Type == "Colorpicker" then
--- 						Library.Flags[a]:Set(Color3.fromRGB(b.R, b.G, b.B))
--- 					elseif Library.Flags[a].Type == "Bind" then
--- 						Library.Flags[a]:Set(Enum.KeyCode[b])
--- 					else
--- 						Library.Flags[a]:Set(b)
--- 					end    
--- 				end)
--- 			else
--- 				Warn("Filesystem could not find flag '" .. a .."'")
--- 			end
--- 		end)
 		for i,v in pairs(Data) do
 			if Library.Flags[i] then
 				spawn(function() 
@@ -381,7 +366,6 @@ function Library:Window(Table)
 
 		-- TOGGLE
 		local function AddToggle(Table, Parent)
-			print("TOGGLE LOCAL")
 			local Toggle = {
 				Value = Table.Default or false, 
 				Flag = Table.Flag or false, 
@@ -435,7 +419,6 @@ function Library:Window(Table)
 
 		-- BIND
 		local function AddBind(Table, Parent)
-			print("BIND LOCAL")
 			local Keybind = {
 				Value = Table.Default or Enum.KeyCode.LeftAlt, 
 				Flag = Table.Flag or false,
@@ -526,7 +509,6 @@ function Library:Window(Table)
 
 		-- SLIDER
 		local function AddSlider(Table, Parent)
-			print("SLIDER LOCAL")
 			local Slider = {
 				Min = Table.Min or 0,
 				Max = Table.Max or Table.Default or 25,
@@ -629,7 +611,6 @@ function Library:Window(Table)
 
 		-- DROPDOWN
 		local function AddDropdown(Table, Parent)
-			print("DP LOCAL")
 			local Dropdown = {
 				Options = Table.Options or {},
 				Flag = Table.Flag or false,
@@ -807,7 +788,6 @@ function Library:Window(Table)
 
 		-- COLORPICKER
 		local function AddColor(Table, Parent)
-			print("COLOR LOCAL")
 			local ColorH, ColorS, ColorV = 1, 1, 1
 			local Colorpicker = {
 				Value = Table.Default or Color3.fromRGB(85, 170, 127),
@@ -1104,9 +1084,18 @@ function Library:Window(Table)
 		end
 	})
 	Misc:AddButton{Name = "Logs", 
-		Callback = function() 
-			setclipboard(HttpService:JSONEncode(Library.Logs))
-			Library:Notification{Content = "Logs copied to clipboard"}
+		Callback = function()
+			if typeof(setclipboard) == "function" then
+				setclipboard(HttpService:JSONEncode(Library.Logs))
+				Library:Notification{Content = "Logs copied to clipboard"}
+			else
+				for i, v in pairs(Library.Logs) do
+					print("Log#"..i, v)
+				end
+				--print(HttpService:JSONEncode(Library.Logs))
+				Library:Notification{Content = "Logs printed in output"}
+			end
+			
 		end}
 	Library:Notification({Content = "Loaded! \nUI: ExecLib v" .._G.Version})
 	return Tabs
@@ -1114,6 +1103,7 @@ end
 
 function Warn(T)
 	Library:Notification({Title = "Error", Content = T, Color = Color3.fromRGB(255, 69, 69)})
+	table.insert(Library.Logs, T)
 end
 
 function Library:Get(str)
