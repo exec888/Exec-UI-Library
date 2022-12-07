@@ -668,16 +668,9 @@ function Library:Window(Table)
 			end)
 			Input.FocusLost:Connect(function(enterPressed)
 				if not enterPressed then return end
-				if typeof(tonumber(Input.Text)) == "number" then
-					OnActivate(tonumber(Input.Text))
-					if Table.Flag and Library.Config.Saves.Enabled == true then
-						Library:Save()
-					end
-				elseif typeof(Input.Text) == "string" then
-					OnActivate(Input.Text)
-					if Table.Flag and Library.Config.Saves.Enabled == true then
-						Library:Save()
-					end
+				OnActivate(Input.Text)
+				if Table.Flag and Library.Config.Saves.Enabled == true then
+					Library:Save()
 				end
 			end)
 			Input.Changed:Connect(function()
@@ -715,33 +708,17 @@ function Library:Window(Table)
 				end
 			end
 			local function CreateOpt(v)
-				if typeof(v) == "number" then
-					local newOp = OptTemp:Clone()
-					ThemeObj("Secondary", newOp) ThemeObj("Text", newOp.Text)
-					newOp.Parent = Options 
-					newOp.Visible = true
-					newOp.Text.Text = v
-					newOp.Text.Activated:Connect(function()
-						OnActivate(v)
-						if Table.Flag and Library.Config.Saves.Enabled == true then
-							Library:Save()
-						end
-					end)
-				elseif typeof(v) == "string" then
-					local newOp = OptTemp:Clone()
-					ThemeObj("Secondary", newOp) ThemeObj("Text", newOp.Text)
-					newOp.Parent = Options 
-					newOp.Visible = true
-					newOp.Text.Text = v
-					newOp.Text.Activated:Connect(function()
-						OnActivate(v)
-						if Table.Flag and Library.Config.Saves.Enabled == true then
-							Library:Save()
-						end
-					end)
-				elseif typeof(v) == "boolean" then
-					Warn("'" .. Label.Text .. "' cannot set boolean as option")
-				end
+				local newOp = OptTemp:Clone()
+				ThemeObj("Secondary", newOp) ThemeObj("Text", newOp.Text)
+				newOp.Parent = Options 
+				newOp.Visible = true
+				newOp.Text.Text = tostring(v)
+				newOp.Text.Activated:Connect(function()
+					OnActivate(v)
+					if Table.Flag and Library.Config.Saves.Enabled == true then
+						Library:Save()
+					end
+				end)
 			end
 			function Dropdown:Refresh(List, clear)
 				if clear then
