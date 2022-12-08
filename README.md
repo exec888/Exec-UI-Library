@@ -1,12 +1,15 @@
 # Documentation
+
 Exec UI Library
 
 ## Loading the Library
+
 ```lua
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Player788/Exec-UI-Library/main/src.lua'))()
 ```
 
 ### Creating a Window
+
 ```lua
 local Window = Library:Window({
 	Name = <title : string>, 
@@ -23,26 +26,36 @@ local Window = Library:Window({
 	Sounds = <boolean>
 })
 ```
-___
+
+***
 
 ### Creating a Tab
+
 ```lua
 local Tab = Window:AddTab{
 	Name = <text : string>,
 	TextColor3 = <Color3>,
 }
 ```
-___
+
+***
+
 ### Creating a Left Section
+
 ```lua
 local LeftSection = Tab:LeftSection(<name : string>)
 ```
+
 ### Creating a Right Section
+
 ```lua
 local RightSection = Tab:RightSection(<name : string>)
 ```
-___
+
+***
+
 ### Creating a Notification
+
 ```lua
 Library:Notification({
 	Title = <header : string>,
@@ -50,8 +63,11 @@ Library:Notification({
 	Time = <duration : number>
 })
 ```
-___
+
+***
+
 ### Creating a Button
+
 ```lua
 LeftSection:AddButton({
 	Text = <name : string>,
@@ -59,16 +75,22 @@ LeftSection:AddButton({
 	Callback = <function>,
 })
 ```
-- You need to state your element as a variable to get its methods, Example ``` local Button = Section:AddButton{} ``` <br>
-- You can also chain element methods, Example ``` LeftSection:AddButton{}:AddButton{}```
+
+* You need to state your element as a variable to get its methods, Example `local Button = Section:AddButton{}`\
+
+* You can also chain element methods, Example `LeftSection:AddButton{}:AddButton{}`
 
 #### Methods
+
 ```lua
 Button:Set(<string>)
 Button:Destroy()
 ```
-___
-### Creating a toggle
+
+***
+
+### Creating a Toggle
+
 ```lua
 LeftSection:AddToggle({
 	Text = <name : string>,
@@ -79,12 +101,16 @@ LeftSection:AddToggle({
 ```
 
 #### Methods
+
 ```lua
 Toggle:Set(<boolean>)
 Toggle:Destroy()
 ```
-___
+
+***
+
 ### Creating a Slider
+
 ```lua
 LeftSection:AddSlider({
 	Text = <name : string>,
@@ -98,12 +124,16 @@ LeftSection:AddSlider({
 ```
 
 #### Methods
+
 ```lua
 Slider:Set(<number>)
 Slider:Destroy()
 ```
-___
+
+***
+
 ### Creating a Textbox
+
 ```lua
 LeftSection:AddTextBox({
 	Text = <name : string>,
@@ -118,12 +148,16 @@ LeftSection:AddTextBox({
 ```
 
 #### Methods
+
 ```lua
 Input:Set(<string>)
 Input:Destroy()
 ```
-___
+
+***
+
 ### Creating a Keybind
+
 ```lua
 LeftSection:AddBind({
 	Text = <name : string>,
@@ -135,13 +169,16 @@ LeftSection:AddBind({
 ```
 
 #### Methods
+
 ```lua
 Bind:Set(Enum.KeyCode.E)
 Bind:Destroy()
 ```
-___
+
+***
 
 ### Creating a Dropdown
+
 ```lua
 LeftSection:AddDropDown({
 	Text = "Select Option",
@@ -154,17 +191,21 @@ LeftSection:AddDropDown({
 ```
 
 #### Methods
+
 ```lua
 Dropdown:Refresh(<list : table>, <clear : boolean>)
 Dropdown:Remove(<index>)
 Dropdown:Set(<index>)
 ```
-___
+
+***
+
 ## Miscellaneous
 
 ### Saves (Filesystem)
-- Flags are used as global variables to store (Values, Tables etc.) Toggles, Sliders, Dropdowns & binds. Adding a flag value will automatically save its configs.
-Example:
+
+* Flags are used as global variables to store (Values, Tables, etc.) Toggles, Sliders, Dropdowns & binds. Adding a flag value will automatically save its configs. Example:
+
 ```lua
 LeftSection:AddToggle({
     Name = "Toggle",
@@ -172,22 +213,29 @@ LeftSection:AddToggle({
     Flag = "toggle"
 })
 ```
+
 #### Methods
+
 ```lua
 Library:Get(<Flag : string>) <returns value>
 Library:Save()
 Library:Load() -- Always add at last or in a button
 ```
-___
+
+***
+
 ### Library Methods
+
 ```lua
 Library:Destroy()
 Library:UpdateTheme()
 ```
 
 ### Library Config
+
 ```lua
 Library.Keys <table : dict>
 Library.Theme <table : dict>
 Library.Logs <table : array>
 Library.Config <table : dict>
+```
