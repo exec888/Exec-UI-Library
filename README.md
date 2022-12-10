@@ -171,7 +171,7 @@ LeftSection:AddBind({
 #### Methods
 
 ```lua
-Bind:Set(Enum.KeyCode.E)
+Bind:Set(KeyCode : EnumItem)
 Bind:Destroy()
 ```
 
