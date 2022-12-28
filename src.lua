@@ -1015,15 +1015,15 @@ function Library:Window(Table)
 	}
 	local FPS = Info:AddButton{"Avg. FPS : "}
 	local PING, ping = Info:AddButton{"Avg. PING : "}
-	if not game:GetService("RunService"):IsStudio() then
-		for a,v in pairs(game.CoreGui.RobloxGui.PerformanceStats:GetDescendants()) do
-			if v:IsA("TextLabel") and v.Name == "TitleLabel" then
-				if v.Text == "Ping" then
-					ping = v.Parent.ValueLabel
-				end
-			end
-		end
-	end
+-- 	if not game:GetService("RunService"):IsStudio() then
+-- 		for a,v in pairs(game.CoreGui.RobloxGui.PerformanceStats:GetDescendants()) do
+-- 			if v:IsA("TextLabel") and v.Name == "TitleLabel" then
+-- 				if v.Text == "Ping" then
+-- 					ping = v.Parent.ValueLabel
+-- 				end
+-- 			end
+-- 		end
+-- 	end
 
 	local TimeFunction = RunService:IsRunning() and time or os.clock
 	local LastIteration, Start
@@ -1038,7 +1038,7 @@ function Library:Window(Table)
 		pcall(function()
 			if not Exec then return end
 			FPS:Set("Avg. FPS : " .. tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start))))
-			if ping then PING:Set("Avg. PING : " .. ping.Text or 0) end	
+			--if ping then PING:Set("Avg. PING : " .. ping.Text or 0) end	
 		end)
 	end
 	Start = TimeFunction()
