@@ -1,4 +1,4 @@
-_G.Version = "2C"
+_G.Version = "2D"
 local Library = {
 	Flags = {},
 	Logs = {},
@@ -397,7 +397,9 @@ function Library:Window(Table)
 				end)
 				if not x then Warn(y) end
 			end
-			Toggle:Set(Toggle.Value)
+			if Table.Flag and Library.Config.Saves.Enabled == true then
+				Toggle:Set(Toggle.Value)
+			end
 			function Toggle:Destroy()
 				newToggle:Destroy()
 			end
